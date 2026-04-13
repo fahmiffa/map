@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps Scraper Pro | Premium Extraction Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Maps Ekstrak Data</h1>
+            <p class="subtitle">Extract data from Google Maps with surgical precision.</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="category" placeholder="What are you looking for? (e.g. Barbershop)">
+            <input type="text" id="location" placeholder="Where? (e.g. Brebes)">
+            <input type="number" id="limit" class="limit-box" value="10" min="1" max="50" title="Limit results">
+            <button id="scrape-btn">
+                <i class="fas fa-search"></i>
+                Extract Data
+            </button>
+        </div>
+
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p>Loading data, please wait... This may take a moment.</p>
+        </div>
+
+        <section class="results-section" id="results-section">
+            <div class="results-header">
+                <h2>Extracted Results (<span id="count">0</span>)</h2>
+                <a href="/download" id="download-btn-link" style="text-decoration: none;">
+                    <button id="download-btn">
+                        <i class="fas fa-download"></i>
+                        Export to CSV
+                    </button>
+                </a>
+            </div>
+            
+            <div class="glass-card">
+                <table id="results-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>WhatsApp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <!-- Data will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
