@@ -2,3 +2,4 @@ flask
 playwright
 requests
 flask-cors
+gunicorn
