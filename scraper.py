@@ -1,3 +1,4 @@
+import os
 import requests
 import re
 from playwright.sync_api import sync_playwright
@@ -37,8 +38,21 @@ def scrape_maps(category, location, limit=10):
     keyword = f"{category} {location}"
     results = []
     with sync_playwright() as p:
+        # Determine executable path for Linux (Armbian)
+        browser_path = None
+        if os.name != 'nt':
+            # Common paths for chromium on Debian/Ubuntu/Armbian
+            potential_paths = ["/usr/bin/chromium", "/usr/bin/chromium-browser"]
+            for path in potential_paths:
+                if os.path.exists(path):
+                    browser_path = path
+                    break
+
         # Launch browser - headless for server use
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(
+            headless=True,
+            executable_path=browser_path
+        )
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
         )
