@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, jsonify, send_file
+from flask_cors import CORS
 from scraper import scrape_maps
 import csv
 import os
 import io
 
 app = Flask(__name__)
+CORS(app)
 
 # Temporary storage for the last run results
 last_results = []
@@ -17,6 +19,9 @@ def index():
 def scrape():
     global last_results
     data = request.json
+    if data is None:
+        return jsonify({"error": "Invalid JSON request or missing Content-Type headers"}), 400
+
     category = data.get('category', '')
     location = data.get('location', '')
     limit = int(data.get('limit', 10))

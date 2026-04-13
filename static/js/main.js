@@ -33,7 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ category, location, limit })
             });
 
-            const result = await response.json();
+            let result;
+            try {
+                result = await response.json();
+            } catch (e) {
+                const text = await response.text();
+                throw new Error(`Server returned non-JSON. Status: ${response.status}. Body: ${text.substring(0, 100)}`);
+            }
 
             if (result.status === 'success') {
                 renderResults(result.data);
@@ -41,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Error: ' + (result.message || 'Unknown error occurred'));
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred during extraction.');
+            console.error('Extraction Error:', error);
+            alert(`Network/Extraction error:\n${error.message}`);
         } finally {
             scrapeBtn.disabled = false;
             loader.style.display = 'none';
