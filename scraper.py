@@ -143,6 +143,8 @@ def scrape_maps(category, location, limit=10):
                     addr_elem = page.locator('//button[@data-item-id="address"]').first
                     if addr_elem.is_visible():
                         address = addr_elem.inner_text()
+                        # Hapus ikon unicode dan newline
+                        address = re.sub(r'[\ue000-\uf8ff]', '', address).replace('\n', ' ').strip()
                 except: pass
 
                 phone = "N/A"
@@ -150,6 +152,8 @@ def scrape_maps(category, location, limit=10):
                     phone_elem = page.locator('//button[contains(@data-item-id,"phone")]').first
                     if phone_elem.is_visible():
                         phone = phone_elem.inner_text()
+                        # Hapus ikon unicode dan newline
+                        phone = re.sub(r'[\ue000-\uf8ff]', '', phone).replace('\n', '').strip()
                 except: pass
 
                 if name:
