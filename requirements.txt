@@ -1,5 +1,6 @@
-flask
-playwright
-requests
-flask-cors
-gunicorn
+Flask==3.1.3
+playwright>=1.40.0
+requests>=2.31.0
+Flask-Cors>=4.0.0
+gunicorn==25.3.0
+
