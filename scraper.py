@@ -156,16 +156,20 @@ def scrape_maps(category, location, limit=10):
                         phone = re.sub(r'[\ue000-\uf8ff]', '', phone).replace('\n', '').strip()
                 except: pass
 
-                if name:
+                if name and phone != "N/A" and address != "N/A":
                     wa_status = check_whatsapp(phone)
-                    data = {
-                        "id": i + 1,
-                        "nama": name,
-                        "alamat": address,
-                        "telepon": phone,
-                        "wa_status": wa_status
-                    }
-                    results.append(data)
+                    
+                    # Hanya tambahkan jika WhatsApp Valid
+                    if wa_status == "Valid":
+                        data = {
+                            "id": len(results) + 1,
+                            "nama": name,
+                            "alamat": address,
+                            "telepon": phone,
+                            "wa_status": wa_status
+                        }
+                        results.append(data)
+
             except Exception as e:
                 print(f"Error scraping item {i}: {e}")
                 continue
