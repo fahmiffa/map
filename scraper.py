@@ -51,7 +51,14 @@ def scrape_maps(category, location, limit=10):
         # Launch browser - headless for server use
         browser = p.chromium.launch(
             headless=True,
-            executable_path=browser_path
+            executable_path=browser_path,
+            args=[
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--disable-software-rasterizer'
+            ]
         )
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
